@@ -1,64 +1,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Controller</h1>
+            <h1>States</h1>
             <p class="lead">
                 Controller’s responsibility should be to communicate between services and the view. Its main concern should be view-model logic.
             </p>
             <p>Aim to make your controllers skinny, as well as the rest of your application, by separating out view logic and business logic into controllers and services, respectively, and by taking advantage of routes and resolves.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Goat Example</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h5>View</h5>
-            <div class="well well-sm">
-                <ul>
-                    <li ng-repeat="goat in goats.goats">{{goat.name}}</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h5>Javascript</h5>
-            <pre><code class="html">
-&lt;ul&gt;&lt;li ng-repeat=&quot;goat in goats.goats&quot;&gt;{{goat.name}}&lt;/li&gt;&lt;/ul&gt;
-            </code></pre>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>Don't use scope - $scope that can bloat your controller</p>
-            <h5>controllers/GoatCtrl.js</h5>
-            <pre><code class="javascript">
-'use strict';
-
-angular.module('angularCodestyleApp')
-    .controller('GoatsCtrl', ['$state', 'GoatsService', 'goats', 'goat',
-        function($state, goatsService, goats, goat) {
-            var self = this;           // using self helps to refer to controller object variables while being in methods
-
-            self.goat = goat.data;     // these are the promises from the stateProvider,
-            self.goats = goats.data;   // they get resolved once the state is activated
-
-            // this function is just a wrapper for the Service,
-            // once the Goat is saved, the state is being switched to
-            // the state "goats".
-            self.saveGoat = function() {
-                goatsService.saveGoat(self.goat)
-                    .then(function() {
-                        $state.go('goats');
-                    });
-            };
-
-            return self;               // instead of the $scope you return the controller
-        }
-    ]);
-
-</code></pre>
         </div>
     </div>
     <div class="row">
@@ -89,9 +36,6 @@ $stateProvider.state('frontend.controller', {
            addBreadCrumb: function(BreadCrumbService) {
                BreadCrumbService.add('frontend.main', 'Frontend');
                BreadCrumbService.add('frontend.controller', 'Controller');
-           },
-           addReferences: function(ReferencesService) {
-               ReferencesService.add('https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'https://scotch.io/tutorials/making-skinny- angularjs-controllers', 'Scotch.io');
            }
        },
    });
@@ -99,6 +43,7 @@ $stateProvider.state('frontend.controller', {
         </div>
     </div>
 </div>
+
 <script>
 // Bad Practice!
 $(document).ready(function() {

@@ -1,4 +1,13 @@
 <ol class="breadcrumb">
-  <li ng-repeat="crumb in frontend.breadCrumbs" ui-sref-active="active"><a ui-sref="{{crumb.state}}">{{crumb.label}}</a></li>
+    <li ng-repeat="crumb in frontend.breadCrumbs" ui-sref-active="active"><a ui-sref="{{crumb.state}}">{{crumb.label}}</a></li>
 </ol>
 <div ui-view></div>
+<div class="footer" ng-if="frontend.references.length > 0">
+    <hr>
+    <div class="container">
+        <h4>References</h4>
+        <ul class="list-nostyle">
+            <li ng-repeat="ref in frontend.references" ui-sref-active="active">{{ref.title}} <a href="{{ref.url}}">{{ref.label}}</a></li>
+        </ul>
+    </div>
+</div>

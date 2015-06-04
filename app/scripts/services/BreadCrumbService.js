@@ -3,7 +3,7 @@
 angular.module('angularCodestyleApp')
 .service('BreadCrumbService', ['$rootScope', function($rootScope) {
     var BreadCrumbService = {
-        crumbs: []
+        crumbs: [],
     };
 
     $rootScope.$on('$stateChangeStart', function() {

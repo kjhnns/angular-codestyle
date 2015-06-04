@@ -9,9 +9,10 @@ angular
             .state('frontend', {
                 url: '/frontend',
                 templateUrl: 'views/frontend.html',
-                controller: ['BreadCrumbService', function(BreadCrumbService) {
+                controller: ['BreadCrumbService', 'ReferencesService', function(BreadCrumbService, ReferencesService) {
                     var self = this;
                     self.breadCrumbs = BreadCrumbService.crumbs;
+                    self.references = ReferencesService.references;
                     return self;
                 }],
                 controllerAs: 'frontend',
@@ -29,20 +30,38 @@ angular
             .state('frontend.controller', {
                 url: '/controller',
                 templateUrl: 'views/frontend.controller.html',
-                controller: 'GoatsCtrl',
-                controllerAs: 'goats',
+                controller: 'GoatsCtrl',        // Referring to the controller
+                controllerAs: 'goats',          // Binding the controller to a specific variable
+
+                // Promises that will be resolved before the State is changed
                 resolve: {
+                    // load all the available goats form the GoatsService
                     goats: ['GoatsService',
                         function(GoatsService) {
                             return GoatsService.getGoats();
                         }
                     ],
+                    // The Controllers expects a promise for a single goat,
                     goat: function() {
                         return {};
                     },
+                    // This a the Service that generates the Breadcrumbs for this Tutorial.
                     addBreadCrumb: function(BreadCrumbService) {
                         BreadCrumbService.add('frontend.main', 'Frontend');
                         BreadCrumbService.add('frontend.controller', 'Controller');
+                    },
+                    addReferences: function(ReferencesService) {
+                        ReferencesService.add('https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'Scotch.io');
+                    }
+                },
+            })
+            .state('frontend.states', {
+                url: '/states',
+                templateUrl: 'views/frontend.states.html',
+                resolve: {
+                    addBreadCrumb: function(BreadCrumbService) {
+                        BreadCrumbService.add('frontend.main', 'Frontend');
+                        BreadCrumbService.add('frontend.states', 'States');
                     }
                 },
             })

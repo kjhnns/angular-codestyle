@@ -8,34 +8,50 @@
         <!-- <img src="images/mocha.png" alt="AngularJS" style="width: 250px; height: auto;"> -->
     </p>
 </div>
-<h1>Agenda</h1>
-<ul>
-    <li><a ui-sref='frontend.main'>Frontend</a>
+<div class="row">
+    <div class="col-md-12">
+        <h1>Agenda</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
         <ul>
-            <li><a ui-sref='frontend.main'>Angular</a>
+            <li><a ui-sref='frontend.main'>Frontend</a>
                 <ul>
-                    <li><a ui-sref='frontend.controller'>Controller</a></li>
-                    <li><a ui-sref='frontend.states'>States</a></li>
-                    <li><a ui-sref='frontend.services'>Services</a></li>
-                    <li><a ui-sref='frontend.views'>Views</a></li>
-                    <li><a ui-sref='frontend.directives'>Directives</a></li>
-                    <li><a ui-sref='frontend.filter'>Filter</a></li>
+                    <li><a ui-sref='frontend.main'>Angular</a>
+                        <ul>
+                            <li><a ui-sref='frontend.controller'>Controller</a></li>
+                            <li><a ui-sref='frontend.states'>States</a></li>
+                            <li><a ui-sref='frontend.services'>Services</a></li>
+                            <li><a ui-sref='frontend.views'>Views</a></li>
+                            <li><a ui-sref='frontend.directives'>Directives</a></li>
+                            <li><a ui-sref='frontend.filter'>Filter</a></li>
+                        </ul>
+                    </li>
+                    <li><a ui-sref='frontend.bootstrap'>Boostrap, Templating</a></li>
                 </ul>
             </li>
-            <li><a ui-sref='frontend.bootstrap'>Boostrap, Templating</a></li>
         </ul>
-    </li>
-    <li><a ui-sref='about'>Backend</a>
+    </div>
+    <div class="col-md-4">
         <ul>
-            <li><a ui-sref='about'>Node.js</a></li>
-            <li><a ui-sref='about'>Express</a>
+            <li><a ui-sref='about'>Backend</a>
                 <ul>
-                    <li><a ui-sref='about'>Routes</a></li>
-                    <li><a ui-sref='about'>Controller</a></li>
+                    <li><a ui-sref='about'>Node.js</a></li>
+                    <li><a ui-sref='about'>Express</a>
+                        <ul>
+                            <li><a ui-sref='about'>Routes</a></li>
+                            <li><a ui-sref='about'>Controller</a></li>
+                        </ul>
+                    </li>
+                    <li><a ui-sref='about'>Mocha</a></li>
                 </ul>
             </li>
-            <li><a ui-sref='about'>Mocha</a></li>
         </ul>
-    </li>
-    <li><a ui-sref='about'>Sublime</a></li>
-</ul>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li><a ui-sref='about'>Sublime</a></li>
+        </ul>
+    </div>
+</div>
