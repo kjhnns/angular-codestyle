@@ -1,14 +1,11 @@
 <h1>Angular Controller</h1>
-<ul>
-    <li><a ui-sref='about'>Angular</a>
-        <ul>
-            <li><a ui-sref='about'>Controller</a></li>
-            <li><a ui-sref='about'>States</a></li>
-            <li><a ui-sref='about'>Services</a></li>
-            <li><a ui-sref='about'>Views</a></li>
-            <li><a ui-sref='about'>Directives</a></li>
-            <li><a ui-sref='about'>Filter</a></li>
-        </ul>
-    </li>
-    <li><a ui-sref='about'>Boostrap, Templating</a></li>
-</ul>
+
+<p class="lead">
+Controller’s responsibility should be to communicate between services and the view.
+Its main concern should be view-model logic.
+</p>
+Don't use scope - $scope that can bloat your controller
+
+Using resolve in UI-router($stateProvider) is powerful, because it allows you to provide your controller with data before it gets loaded
+
+Aim to make your controllers skinny, as well as the rest of your application, by separating out view logic and business logic into controllers and services, respectively, and by taking advantage of routes and resolves.

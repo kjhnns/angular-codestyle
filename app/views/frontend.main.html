@@ -1,0 +1,56 @@
+<h1>Frontend / Angular</h1>
+<ul>
+    <li><a ui-sref='frontend.main'>Angular</a>
+        <ul>
+            <li><a ui-sref='frontend.controller'>Controller</a></li>
+            <li><a ui-sref='frontend.states'>States</a></li>
+            <li><a ui-sref='frontend.services'>Services</a></li>
+            <li><a ui-sref='frontend.views'>Views</a></li>
+            <li><a ui-sref='frontend.directives'>Directives</a></li>
+            <li><a ui-sref='frontend.filter'>Filter</a></li>
+        </ul>
+    </li>
+    <li><a ui-sref='frontend.bootstrap'>Boostrap, Templating</a></li>
+</ul>
+
+<div class="container">
+    <div class="row">
+        <h3>Conventions for Frontend Development:</h3>
+        <div class="col-md-12">
+        <dl class="dl-horizontal">
+              <dt>Controller</dt>
+              <dd>"controllers/NameCtrl.js" - CamelCase, should end on "Ctrl"</dd>
+
+              <dt>Services</dt>
+              <dd>"services/NameService.js" - CamelCase, should end on "Service"</dd>
+
+              <dt>Directives</dt>
+              <dd>"directives/NameDirective.js" - CamelCase, should end on "Directive"</dd>
+
+              <dt>Filters</dt>
+              <dd>"filters/NameFilter.js" - CamelCase, should end on "Filter"</dd>
+
+              <dt>States</dt>
+              <dd>Lowercase, should get nested by ".", e.g. "parent.child", "frontend.main" </dd>
+        </dl>
+        </div>
+        <div class="col-md-12">
+        <dl class="dl-horizontal">
+              <dt>logic = controller</dt>
+              <dd>Put the logic that you need for your code inside a Controller. Controller are meant to keep logic from your views away (except for repetitions). </dd>
+
+              <dt>view name = state</dt>
+              <dd>Especially when it comes to nested states, e.g. let dummy be the parent state and index be a child states: dummy.index.html instead of index.html</dd>
+
+              <dt>no ng-init</dt>
+              <dd>Don't use the ng-init tag in views. There is actually no need for the initialization since you can use your controllers/services to initialize data etc. Besides that it makes your code hard to read.</dd>
+
+              <dt>controller as</dt>
+              <dd>if you ever feel like you need to use ng-controller, please make sure you are binding the controller to a variable, e.g. ng-controller="SettingsController as settings". Controllers are meant to be injected by the $stateProvider.</dd>
+
+              <dt>no inline style</dt>
+              <dd>Don't use the "style" tag/attribute. Always create a css class. They keep the code clean and help people to reuse your code.</dd>
+        </dl>
+        </div>
+    </div>
+</div>
