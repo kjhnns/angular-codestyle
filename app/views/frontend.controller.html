@@ -5,7 +5,9 @@
             <p class="lead">
                 Controller’s responsibility should be to communicate between services and the view. Its main concern should be view-model logic.
             </p>
-            <p>Aim to make your controllers skinny, as well as the rest of your application, by separating out view logic and business logic into controllers and services, respectively, and by taking advantage of routes and resolves.</p>
+            <p>Aim to make your controllers <b>skinny</b>, as well as the rest of your application, by separating out view logic and business logic into controllers and services, respectively, and by taking advantage of routes and resolves.</p>
+            <p>Only Wrap the Service functions that you really need.</p>
+            <p>Link the DataStores from the Services directly, to emulate two way Binding.</p>
         </div>
     </div>
     <div class="row">
@@ -20,12 +22,16 @@
                 <ul>
                     <li ng-repeat="goat in goats.goats">{{goat.name}}</li>
                 </ul>
+                <input type="text" name="GoatName" ng-model="goats.goat.name" />
+                <button class="btn btn-default" ng-click="goats.saveGoat()">Add Goat</button>
             </div>
         </div>
         <div class="col-md-6">
             <h5>Javascript</h5>
             <pre><code class="html">
 &lt;ul&gt;&lt;li ng-repeat=&quot;goat in goats.goats&quot;&gt;{{goat.name}}&lt;/li&gt;&lt;/ul&gt;
+&lt;input type=&quot;text&quot; name=&quot;GoatName&quot; ng-model=&quot;goats.goat.name&quot; /&gt;
+&lt;button class=&quot;btn btn-default&quot; ng-click=&quot;goats.saveGoat()&quot;&gt;Add Goat&lt;/button&gt;
             </code></pre>
         </div>
     </div>
@@ -37,64 +43,58 @@
 'use strict';
 
 angular.module('angularCodestyleApp')
-    .controller('GoatsCtrl', ['$state', 'GoatsService', 'goats', 'goat',
-        function($state, goatsService, goats, goat) {
+    .controller('GoatsCtrl', ['$state', 'GoatsService', 'goats',
+        function($state, goatsService, goats) {
             var self = this;           // using self helps to refer to controller object variables while being in methods
 
-            self.goat = goat.data;     // these are the promises from the stateProvider,
-            self.goats = goats.data;   // they get resolved once the state is activated
+            self.goats = goats.data;   // this is the promises from the stateProvider, it get resolved once the state is activated
+
+            self.goat = {};
 
             // this function is just a wrapper for the Service,
             // once the Goat is saved, the state is being switched to
             // the state "goats".
             self.saveGoat = function() {
-                goatsService.saveGoat(self.goat)
-                    .then(function() {
-                        $state.go('goats');
-                    });
+                goatsService.saveGoat(self.goat);
+                self.goat = {};
             };
 
             return self;               // instead of the $scope you return the controller
         }
     ]);
-
 </code></pre>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h3>StateRouter parameters for loading the Controller right.</h3>
+            <h3>StateRouter parameters for loading the Controller in the right way.</h3>
             <p>Using resolve in UI-router($stateProvider) is powerful, because it allows you to provide your controller with data before it gets loaded</p>
             <h5>routes/MainRoutes.js</h5>
             <pre><code class="javascript">
 $stateProvider.state('frontend.controller', {
-       url: '/controller',
-       templateUrl: 'views/frontend.controller.html',
-       controller: 'GoatsCtrl',        // Referring to the controller
-       controllerAs: 'goats',          // Binding the controller to a specific variable
+    url: '/controller',
+    templateUrl: 'views/frontend.controller.html',
+    controller: 'GoatsCtrl',        // Referring to the controller
+    controllerAs: 'goats',          // Binding the controller to a specific variable
 
-       // Promises that will be resolved before the State is changed
-       resolve: {
-           // load all the available goats form the GoatsService
-           goats: ['GoatsService',
-               function(GoatsService) {
-                   return GoatsService.getGoats();
-               }
-           ],
-           // The Controllers expects a promise for a single goat,
-           goat: function() {
-               return {};
-           },
-           // This a the Service that generates the Breadcrumbs for this Tutorial.
-           addBreadCrumb: function(BreadCrumbService) {
-               BreadCrumbService.add('frontend.main', 'Frontend');
-               BreadCrumbService.add('frontend.controller', 'Controller');
-           },
-           addReferences: function(ReferencesService) {
-               ReferencesService.add('https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'https://scotch.io/tutorials/making-skinny- angularjs-controllers', 'Scotch.io');
-           }
-       },
-   });
+    // Promises that will be resolved before the State is changed
+    resolve: {
+        // load all the available goats form the GoatsService
+        goats: ['GoatsService',
+            function(GoatsService) {
+                return GoatsService.getGoats();
+            }
+        ],
+        // This a the Service that generates the Breadcrumbs for this Tutorial.
+        addBreadCrumb: function(BreadCrumbService) {
+            BreadCrumbService.add('frontend.main', 'Frontend');
+            BreadCrumbService.add('frontend.controller', 'Controller');
+        },
+        addReferences: function(ReferencesService) {
+            ReferencesService.add('https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'Scotch.io');
+        }
+    },
+})
             </code></pre>
         </div>
     </div>

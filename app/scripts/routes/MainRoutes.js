@@ -41,11 +41,7 @@ angular
                             return GoatsService.getGoats();
                         }
                     ],
-                    // The Controllers expects a promise for a single goat,
-                    goat: function() {
-                        return {};
-                    },
-                    // This a the Service that generates the Breadcrumbs for this Tutorial.
+                    // Tutorial Services.
                     addBreadCrumb: function(BreadCrumbService) {
                         BreadCrumbService.add('frontend.main', 'Frontend');
                         BreadCrumbService.add('frontend.controller', 'Controller');
@@ -62,7 +58,28 @@ angular
                     addBreadCrumb: function(BreadCrumbService) {
                         BreadCrumbService.add('frontend.main', 'Frontend');
                         BreadCrumbService.add('frontend.states', 'States');
+                    },
+                    addReferences: function(ReferencesService) {
+                        ReferencesService.add('https://github.com/angular-ui/ui-router/wiki', 'https://github.com/angular-ui/ui-router/wiki', 'angular-ui/ui-router');
+                        ReferencesService.add('https://scotch.io/tutorials/angular-routing-using-ui-router', 'https://scotch.io/tutorials/angular-routing-using-ui-router', 'scotch.io');
+
                     }
+
+                },
+            })
+            .state('frontend.services', {
+                url: '/services',
+                templateUrl: 'views/frontend.services.html',
+                resolve: {
+                    addBreadCrumb: function(BreadCrumbService) {
+                        BreadCrumbService.add('frontend.main', 'Frontend');
+                        BreadCrumbService.add('frontend.services', 'Services');
+                    },
+                    addReferences: function(ReferencesService) {
+                        ReferencesService.add('https://github.com/johnpapa/angular-styleguide#services', 'https://github.com/johnpapa/angular-styleguide#services', 'johnpapa/angular-styleguide');
+
+                    }
+
                 },
             })
             .state('about', {

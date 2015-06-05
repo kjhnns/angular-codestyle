@@ -2,31 +2,21 @@
 
 angular.module('angularCodestyleApp')
     .service('GoatsService', ['$http', function($http) {
-        var results = {
-            getGoats: [{
+        this.goats = [{
                 name: 'Ziege'
             }, {
                 name: 'Ersan'
             }, {
                 name: 'Jorrit'
-            }],
-            getGoat: {
-                name: 'Jorrit',
-                age: '12',
-                birthplace: 'Darmstadt'
-            }
-        };
+            }];
 
 
         this.saveGoat = function(goat) {
-            return $http.post('/goats', goat);
+            this.goats.push(goat);
         };
 
         this.getGoats = function() {
-            return {data: results.getGoats};
+            return {data: this.goats};
         };
 
-        this.getGoat = function() {
-            return results.getGoat;
-        };
     }]);

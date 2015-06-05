@@ -3,9 +3,10 @@
         <div class="col-md-12">
             <h1>States</h1>
             <p class="lead">
-                Controller’s responsibility should be to communicate between services and the view. Its main concern should be view-model logic.
+                A state corresponds to a "place" in the application in terms of the overall UI and navigation.
             </p>
-            <p>Aim to make your controllers skinny, as well as the rest of your application, by separating out view logic and business logic into controllers and services, respectively, and by taking advantage of routes and resolves.</p>
+            <p>The UI-Router is a routing framework for AngularJS built by the AngularUI team. It provides a different approach than ngRoute in that it changes your application views based on state of the application and not just the route URL.</p>
+            <p>A state describes (via the controller / template / view properties) what the UI looks like and does at that place. States often have things in common, and the primary way of factoring out these commonalities in this model is via the state hierarchy, i.e. parent/child states aka nested states.</p>
         </div>
     </div>
     <div class="row">
@@ -15,35 +16,72 @@
             <h5>routes/MainRoutes.js</h5>
             <pre><code class="javascript">
 $stateProvider.state('frontend.controller', {
-       url: '/controller',
-       templateUrl: 'views/frontend.controller.html',
-       controller: 'GoatsCtrl',        // Referring to the controller
-       controllerAs: 'goats',          // Binding the controller to a specific variable
+    url: '/controller',
+    templateUrl: 'views/frontend.controller.html',
+    controller: 'GoatsCtrl',        // Referring to the controller
+    controllerAs: 'goats',          // Binding the controller to a specific variable
 
-       // Promises that will be resolved before the State is changed
-       resolve: {
-           // load all the available goats form the GoatsService
-           goats: ['GoatsService',
-               function(GoatsService) {
-                   return GoatsService.getGoats();
-               }
-           ],
-           // The Controllers expects a promise for a single goat,
-           goat: function() {
-               return {};
-           },
-           // This a the Service that generates the Breadcrumbs for this Tutorial.
-           addBreadCrumb: function(BreadCrumbService) {
-               BreadCrumbService.add('frontend.main', 'Frontend');
-               BreadCrumbService.add('frontend.controller', 'Controller');
-           }
-       },
-   });
+    // Promises that will be resolved before the State is changed
+    resolve: {
+        // load all the available goats form the GoatsService
+        goats: ['GoatsService',
+            function(GoatsService) {
+                return GoatsService.getGoats();
+            }
+        ],
+        // The Controllers expects a promise for a single goat,
+        goat: function() {
+            return {};
+        },
+        // Tutorial Services.
+        addBreadCrumb: function(BreadCrumbService) {
+            BreadCrumbService.add('frontend.main', 'Frontend');
+            BreadCrumbService.add('frontend.controller', 'Controller');
+        },
+        addReferences: function(ReferencesService) {
+            ReferencesService.add('https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'https://scotch.io/tutorials/making-skinny-angularjs-controllers', 'Scotch.io');
+        }
+    },
+})
+            </code></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Nested Views</h3>
+            <p>A state describes (via the controller / template / view properties) what the UI looks like and does at that place. States often have things in common, and the primary way of factoring out these commonalities in this model is via the state hierarchy, i.e. parent/child states aka nested states.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>routes/MainRoutes.js</h5>
+            <pre><code class="javascript">
+$stateProvider
+.state('frontend', {
+    url: '/frontend',
+    templateUrl: 'views/frontend.html',
+    controller: ['BreadCrumbService', 'ReferencesService', function(BreadCrumbService, ReferencesService) {
+        var self = this;
+        self.breadCrumbs = BreadCrumbService.crumbs;
+        self.references = ReferencesService.references;
+        return self;
+    }],
+    controllerAs: 'frontend',
+    abstract: true
+})
+.state('frontend.main', {
+    url: '/main',
+    templateUrl: 'views/frontend.main.html',
+    resolve: {
+        addBreadCrumb: function(BreadCrumbService) {
+            BreadCrumbService.add('frontend.main', 'Frontend');
+        }
+    }
+})
             </code></pre>
         </div>
     </div>
 </div>
-
 <script>
 // Bad Practice!
 $(document).ready(function() {

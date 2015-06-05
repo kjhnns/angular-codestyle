@@ -1,0 +1,82 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Services</h1>
+            <p class="lead">
+                All logic belongs to the services.
+            </p>
+            <p>The controller's responsibility is for the presentation and gathering of information for the view. It should not care how it gets the data, just that it knows who to ask for it. Separating the data services moves the logic on how to get it to the data service, and lets the controller be simpler and more focused on the view.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Services w/o caching data</h3>
+            <pre><code class="javascript">
+'use strict';
+angular.module('angularCodestyleApp').service('GoatsService', ['$http', function($http) {
+    this.saveGoat = function(goat) {
+        return $http.post('/goats', goat);
+    };
+
+    this.searchGoats = function(query) {
+        return $http.get('/goats/search/' + query);
+    };
+
+    this.getGoats = function() {
+        return $http.get('/goats');
+    };
+
+    this.getGoat = function(name) {
+        return $http.get('/goat/' + name);
+    };
+}]);
+
+</code></pre>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Services + caching data</h3>
+            <pre><code class="javascript">
+'use strict';
+
+angular.module('angularCodestyleApp').factory('DummyService', ['$http',
+function($http) {
+
+    var DummyService = {
+        dummies : [],
+    };
+
+    DummyService.getOne = function(id) {
+        return $http.get('/dummy/' + id).success(function(dummies) {
+            // Clear array
+            DummyService.dummies.splice(0, DummyService.dummies.length);
+            // Copy elements
+            for (var i = 0; i < dummies.length; i++) {
+                DummyService.dummies.push(dummies[i]);
+            }
+            // The array is not overwritten! This updates all copies
+            // in controllers as well and keeps the data binding working.
+        });
+    };
+
+    return DummyService;
+}]);
+
+
+</code></pre>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+// Bad Practice!
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});
+</script>
