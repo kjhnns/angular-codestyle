@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularCodestyleApp')
-    .service('GoatsService', ['$http', function($http) {
+    .service('GoatsService', function() {
         this.goats = [{
                 name: 'Ziege'
             }, {
@@ -19,4 +19,4 @@ angular.module('angularCodestyleApp')
             return {data: this.goats};
         };
 
-    }]);
+    });

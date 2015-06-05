@@ -30,8 +30,8 @@ angular
             .state('frontend.controller', {
                 url: '/controller',
                 templateUrl: 'views/frontend.controller.html',
-                controller: 'GoatsCtrl',        // Referring to the controller
-                controllerAs: 'goats',          // Binding the controller to a specific variable
+                controller: 'GoatsCtrl', // Referring to the controller
+                controllerAs: 'goats', // Binding the controller to a specific variable
 
                 // Promises that will be resolved before the State is changed
                 resolve: {
@@ -82,6 +82,57 @@ angular
 
                 },
             })
+            .state('frontend.directives', {
+                url: '/directives',
+                templateUrl: 'views/frontend.directives.html',
+                resolve: {
+                    addBreadCrumb: function(BreadCrumbService) {
+                        BreadCrumbService.add('frontend.main', 'Frontend');
+                        BreadCrumbService.add('frontend.directives', 'Directives');
+                    },
+                    addReferences: function(ReferencesService) {
+                        ReferencesService.add('https://docs.angularjs.org/guide/directive', 'https://docs.angularjs.org/guide/directive', 'docs.angularjs.org');
+
+                    }
+
+                },
+            })
+            .state('frontend.bootstrap', {
+                url: '/boostrap',
+                templateUrl: 'views/frontend.bootstrap.html',
+                resolve: {
+                    addBreadCrumb: function(BreadCrumbService) {
+                        BreadCrumbService.add('frontend.main', 'Frontend');
+                        BreadCrumbService.add('frontend.bootstrap', 'Bootstrap');
+                    }
+                }
+            })
+            .state('frontend.views', {
+                url: '/views',
+                templateUrl: 'views/frontend.views.html',
+                resolve: {
+                    addBreadCrumb: function(BreadCrumbService) {
+                        BreadCrumbService.add('frontend.main', 'Frontend');
+                        BreadCrumbService.add('frontend.views', 'Views');
+                    }
+                }
+            })
+            .state('frontend.filter', {
+                url: '/filter',
+                templateUrl: 'views/frontend.filter.html',
+                resolve: {
+                    addBreadCrumb: function(BreadCrumbService) {
+                        BreadCrumbService.add('frontend.main', 'Frontend');
+                        BreadCrumbService.add('frontend.filter', 'Filter');
+                    },
+                    addReferences: function(ReferencesService) {
+                        ReferencesService.add('https://scotch.io/tutorials/building-custom-angularjs-filters', 'https://scotch.io/tutorials/building-custom-angularjs-filters', 'scotch.io');
+                        ReferencesService.add('https://docs.angularjs.org/guide/filter', 'https://docs.angularjs.org/guide/filter', 'docs.angularjs.org');
+                        ReferencesService.add('https://docs.angularjs.org/api/ng/filter/orderBy', 'https://docs.angularjs.org/api/ng/filter/orderBy', 'docs.angularjs.org/api');
+
+                    }
+                }
+            })
             .state('about', {
                 url: '/about',
                 templateUrl: 'views/about.html'
@@ -89,9 +140,5 @@ angular
             .state('home', {
                 url: '/home',
                 templateUrl: 'views/main.html'
-            })
-            .state('boostrap', {
-                url: '/boostrapUI',
-                templateUrl: 'views/boostrap.html'
             });
     });

@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Controller</h1>
+            <p class="lead">
+                Controller’s responsibility should be to communicate between services and the view. Its main concern should be view-model logic.
+            </p>
+            <p>At a high level, directives are markers on a DOM element (such as an attribute, element name, comment or CSS class) that tell AngularJS's HTML compiler ($compile) to attach a specified behavior to that DOM element or even transform the DOM element and its children.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>ListGoatsDirective Example</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>View</h5>
+            <div class="well well-sm">
+                <list-goats goats="[{name: 'Daniel'},{name: 'Ersan'},{name: 'Stefan'}]"></list-goats>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5>Javascript</h5>
+            <pre><code class="html">
+&lt;list-goats goats=&quot;[{name: 'Daniel'},{name: 'Ersan'},{name: 'Stefan'}]&quot;&gt;&lt;/list-goats&gt;
+            </code></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>A Directive is like inventing new HTML Elements</h3>
+            <p>This is the lightest way of implementing the Directive.</p>
+            <h5>directives/ListGoatsDirective.js</h5>
+            <pre><code class="javascript">
+'use strict';
+
+angular.module('angularCodestyleApp').directive('listGoats', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: {
+            goats: '='
+        },
+        template: '&lt;ul&gt;&lt;li ng-repeat=&quot;goat in goats&quot;&gt;&#123; &#123;goat.name&#125;&#125;&lt;/li&gt;&lt;/ul&gt;'
+    };
+});
+            </code></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>More Sophisticated Version</h3>
+            <p>This version is already supporting templateUrl an you can add an additional controller.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <pre><code class="javascript">
+'use strict';
+
+angular.module('angularCodestyleApp').directive('listGoats', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        controller: ['GoatsService', function(GoatsService) {
+            return {
+               goats: GoatsService.goats
+            };
+        }],
+        controllerAs: 'listGoats',
+        templateUrl: 'views/ListGoatsDirective.js'
+    };
+});
+            </code></pre>
+        </div>
+        <div class="col-md-6">
+            <h5>views/ListGoatsDirective.js</h5>
+            <pre><code class="html">
+ &lt;ul&gt;&lt;li ng-repeat=&quot;goat in goats&quot;&gt;&#123; &#123;goat.name}}&lt;/li&gt;&lt;/ul&gt;
+            </code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+// Bad Practice!
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});
+</script>

@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Filter</h1>
+            <p class="lead">
+                A filter formats the value of an expression for display to the user. They can be used in view templates, controllers or services and it is easy to define your own filter.
+            </p>
+            <p>A filter is very similar to an factory or service in many regards but has the added advantage of behaving on a global scope once created. As we have previously seen, you can invoke a filter on both the data binding in your html or directly inside of your controller or directive by using the $filter service.</p>
+            <p>Filters can be applied to the result of another filter. This is called "chaining".</p>
+            <h5>Angular Default Filters</h5>
+            <ul>
+                <li>currency</li>
+                <li>date</li>
+                <li>filter</li>
+                <li>json</li>
+                <li>limitTo</li>
+                <li>lowercase</li>
+                <li>number</li>
+                <li>orderBy</li>
+                <li>uppercase</li>
+            </ul>
+            <pre><code class="javascript">
+'use strict';
+
+angular.module('ngfin').filter('empty', function() {
+    return function(value, defaultValue) {
+        if(value === undefined || value === null || value === '') {
+            return defaultValue || 'Nicht angegeben';
+        }
+        return value;
+    };
+});
+</code></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+// Bad Practice!
+$(document).ready(function() {
+    $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+});
+</script>
